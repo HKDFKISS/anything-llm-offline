@@ -1,6 +1,6 @@
 name: Build and Export AnythingLLM Image
 on:
-  workflow_dispatch:  # 允许手动触发
+  workflow_dispatch:
 
 jobs:
   build:
