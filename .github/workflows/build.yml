@@ -1,0 +1,28 @@
+name: Build and Export AnythingLLM Image
+on:
+  workflow_dispatch:  # 允许手动触发
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout (not needed but required by Actions)
+        uses: actions/checkout@v4
+
+      - name: Pull AnythingLLM image
+        run: |
+          echo "Pulling mintplexlabs/anything-llm:latest..."
+          docker pull mintplexlabs/anything-llm:latest
+
+      - name: Save image to tar file
+        run: |
+          echo "Saving image to anything-llm.tar..."
+          docker save -o anything-llm.tar mintplexlabs/anything-llm:latest
+          ls -lh anything-llm.tar
+
+      - name: Upload as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: anything-llm-tarball
+          path: anything-llm.tar
+          retention-days: 7
